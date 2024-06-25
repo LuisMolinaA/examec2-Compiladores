@@ -1,0 +1,695 @@
+Created by PLY version 3.11 (http://www.dabeaz.com/ply)
+
+Unused terminals:
+
+    NEWLINE
+    STRING
+
+Grammar
+
+Rule 0     S' -> init
+Rule 1     init -> include function
+Rule 2     include -> GATO INCLUDE OPLOG ID OPLOG
+Rule 3     function -> INT MAIN PAREI PARED BRACI statement_list BRACD
+Rule 4     statement_list -> statement statement_list
+Rule 5     statement_list -> statement
+Rule 6     statement -> variable_declaration
+Rule 7     statement -> assignment
+Rule 8     statement -> for_loop
+Rule 9     statement -> return_statement
+Rule 10    variable_declaration -> INT var_list PUNTOCOMA
+Rule 11    var_list -> ID
+Rule 12    var_list -> ID IGUAL expression
+Rule 13    var_list -> var_list COMA ID
+Rule 14    var_list -> var_list COMA ID IGUAL expression
+Rule 15    assignment -> INT ID IGUAL expression PUNTOCOMA
+Rule 16    assignment -> ID IGUAL expression PUNTOCOMA
+Rule 17    expression -> term
+Rule 18    expression -> expression OPMAT term
+Rule 19    term -> NUM
+Rule 20    term -> ID
+Rule 21    for_loop -> FOR PAREI ID IGUAL NUM PUNTOCOMA ID OPLOG NUM PUNTOCOMA ID OPMAT PARED BRACI statement_list BRACD
+Rule 22    condition -> expression OPLOG expression
+Rule 23    return_statement -> RETURN NUM PUNTOCOMA
+Rule 24    return_statement -> RETURN ID PUNTOCOMA
+
+Terminals, with rules where they appear
+
+BRACD                : 3 21
+BRACI                : 3 21
+COMA                 : 13 14
+FOR                  : 21
+GATO                 : 2
+ID                   : 2 11 12 13 14 15 16 20 21 21 21 24
+IGUAL                : 12 14 15 16 21
+INCLUDE              : 2
+INT                  : 3 10 15
+MAIN                 : 3
+NEWLINE              : 
+NUM                  : 19 21 21 23
+OPLOG                : 2 2 21 22
+OPMAT                : 18 21
+PARED                : 3 21
+PAREI                : 3 21
+PUNTOCOMA            : 10 15 16 21 21 23 24
+RETURN               : 23 24
+STRING               : 
+error                : 
+
+Nonterminals, with rules where they appear
+
+assignment           : 7
+condition            : 
+expression           : 12 14 15 16 18 22 22
+for_loop             : 8
+function             : 1
+include              : 1
+init                 : 0
+return_statement     : 9
+statement            : 4 5
+statement_list       : 3 4 21
+term                 : 17 18
+var_list             : 10 13 14
+variable_declaration : 6
+
+Parsing method: LALR
+
+state 0
+
+    (0) S' -> . init
+    (1) init -> . include function
+    (2) include -> . GATO INCLUDE OPLOG ID OPLOG
+
+    GATO            shift and go to state 3
+
+    init                           shift and go to state 1
+    include                        shift and go to state 2
+
+state 1
+
+    (0) S' -> init .
+
+
+
+state 2
+
+    (1) init -> include . function
+    (3) function -> . INT MAIN PAREI PARED BRACI statement_list BRACD
+
+    INT             shift and go to state 5
+
+    function                       shift and go to state 4
+
+state 3
+
+    (2) include -> GATO . INCLUDE OPLOG ID OPLOG
+
+    INCLUDE         shift and go to state 6
+
+
+state 4
+
+    (1) init -> include function .
+
+    $end            reduce using rule 1 (init -> include function .)
+
+
+state 5
+
+    (3) function -> INT . MAIN PAREI PARED BRACI statement_list BRACD
+
+    MAIN            shift and go to state 7
+
+
+state 6
+
+    (2) include -> GATO INCLUDE . OPLOG ID OPLOG
+
+    OPLOG           shift and go to state 8
+
+
+state 7
+
+    (3) function -> INT MAIN . PAREI PARED BRACI statement_list BRACD
+
+    PAREI           shift and go to state 9
+
+
+state 8
+
+    (2) include -> GATO INCLUDE OPLOG . ID OPLOG
+
+    ID              shift and go to state 10
+
+
+state 9
+
+    (3) function -> INT MAIN PAREI . PARED BRACI statement_list BRACD
+
+    PARED           shift and go to state 11
+
+
+state 10
+
+    (2) include -> GATO INCLUDE OPLOG ID . OPLOG
+
+    OPLOG           shift and go to state 12
+
+
+state 11
+
+    (3) function -> INT MAIN PAREI PARED . BRACI statement_list BRACD
+
+    BRACI           shift and go to state 13
+
+
+state 12
+
+    (2) include -> GATO INCLUDE OPLOG ID OPLOG .
+
+    INT             reduce using rule 2 (include -> GATO INCLUDE OPLOG ID OPLOG .)
+
+
+state 13
+
+    (3) function -> INT MAIN PAREI PARED BRACI . statement_list BRACD
+    (4) statement_list -> . statement statement_list
+    (5) statement_list -> . statement
+    (6) statement -> . variable_declaration
+    (7) statement -> . assignment
+    (8) statement -> . for_loop
+    (9) statement -> . return_statement
+    (10) variable_declaration -> . INT var_list PUNTOCOMA
+    (15) assignment -> . INT ID IGUAL expression PUNTOCOMA
+    (16) assignment -> . ID IGUAL expression PUNTOCOMA
+    (21) for_loop -> . FOR PAREI ID IGUAL NUM PUNTOCOMA ID OPLOG NUM PUNTOCOMA ID OPMAT PARED BRACI statement_list BRACD
+    (23) return_statement -> . RETURN NUM PUNTOCOMA
+    (24) return_statement -> . RETURN ID PUNTOCOMA
+
+    INT             shift and go to state 14
+    ID              shift and go to state 21
+    FOR             shift and go to state 22
+    RETURN          shift and go to state 23
+
+    statement_list                 shift and go to state 15
+    statement                      shift and go to state 16
+    variable_declaration           shift and go to state 17
+    assignment                     shift and go to state 18
+    for_loop                       shift and go to state 19
+    return_statement               shift and go to state 20
+
+state 14
+
+    (10) variable_declaration -> INT . var_list PUNTOCOMA
+    (15) assignment -> INT . ID IGUAL expression PUNTOCOMA
+    (11) var_list -> . ID
+    (12) var_list -> . ID IGUAL expression
+    (13) var_list -> . var_list COMA ID
+    (14) var_list -> . var_list COMA ID IGUAL expression
+
+    ID              shift and go to state 25
+
+    var_list                       shift and go to state 24
+
+state 15
+
+    (3) function -> INT MAIN PAREI PARED BRACI statement_list . BRACD
+
+    BRACD           shift and go to state 26
+
+
+state 16
+
+    (4) statement_list -> statement . statement_list
+    (5) statement_list -> statement .
+    (4) statement_list -> . statement statement_list
+    (5) statement_list -> . statement
+    (6) statement -> . variable_declaration
+    (7) statement -> . assignment
+    (8) statement -> . for_loop
+    (9) statement -> . return_statement
+    (10) variable_declaration -> . INT var_list PUNTOCOMA
+    (15) assignment -> . INT ID IGUAL expression PUNTOCOMA
+    (16) assignment -> . ID IGUAL expression PUNTOCOMA
+    (21) for_loop -> . FOR PAREI ID IGUAL NUM PUNTOCOMA ID OPLOG NUM PUNTOCOMA ID OPMAT PARED BRACI statement_list BRACD
+    (23) return_statement -> . RETURN NUM PUNTOCOMA
+    (24) return_statement -> . RETURN ID PUNTOCOMA
+
+    BRACD           reduce using rule 5 (statement_list -> statement .)
+    INT             shift and go to state 14
+    ID              shift and go to state 21
+    FOR             shift and go to state 22
+    RETURN          shift and go to state 23
+
+    statement                      shift and go to state 16
+    statement_list                 shift and go to state 27
+    variable_declaration           shift and go to state 17
+    assignment                     shift and go to state 18
+    for_loop                       shift and go to state 19
+    return_statement               shift and go to state 20
+
+state 17
+
+    (6) statement -> variable_declaration .
+
+    INT             reduce using rule 6 (statement -> variable_declaration .)
+    ID              reduce using rule 6 (statement -> variable_declaration .)
+    FOR             reduce using rule 6 (statement -> variable_declaration .)
+    RETURN          reduce using rule 6 (statement -> variable_declaration .)
+    BRACD           reduce using rule 6 (statement -> variable_declaration .)
+
+
+state 18
+
+    (7) statement -> assignment .
+
+    INT             reduce using rule 7 (statement -> assignment .)
+    ID              reduce using rule 7 (statement -> assignment .)
+    FOR             reduce using rule 7 (statement -> assignment .)
+    RETURN          reduce using rule 7 (statement -> assignment .)
+    BRACD           reduce using rule 7 (statement -> assignment .)
+
+
+state 19
+
+    (8) statement -> for_loop .
+
+    INT             reduce using rule 8 (statement -> for_loop .)
+    ID              reduce using rule 8 (statement -> for_loop .)
+    FOR             reduce using rule 8 (statement -> for_loop .)
+    RETURN          reduce using rule 8 (statement -> for_loop .)
+    BRACD           reduce using rule 8 (statement -> for_loop .)
+
+
+state 20
+
+    (9) statement -> return_statement .
+
+    INT             reduce using rule 9 (statement -> return_statement .)
+    ID              reduce using rule 9 (statement -> return_statement .)
+    FOR             reduce using rule 9 (statement -> return_statement .)
+    RETURN          reduce using rule 9 (statement -> return_statement .)
+    BRACD           reduce using rule 9 (statement -> return_statement .)
+
+
+state 21
+
+    (16) assignment -> ID . IGUAL expression PUNTOCOMA
+
+    IGUAL           shift and go to state 28
+
+
+state 22
+
+    (21) for_loop -> FOR . PAREI ID IGUAL NUM PUNTOCOMA ID OPLOG NUM PUNTOCOMA ID OPMAT PARED BRACI statement_list BRACD
+
+    PAREI           shift and go to state 29
+
+
+state 23
+
+    (23) return_statement -> RETURN . NUM PUNTOCOMA
+    (24) return_statement -> RETURN . ID PUNTOCOMA
+
+    NUM             shift and go to state 30
+    ID              shift and go to state 31
+
+
+state 24
+
+    (10) variable_declaration -> INT var_list . PUNTOCOMA
+    (13) var_list -> var_list . COMA ID
+    (14) var_list -> var_list . COMA ID IGUAL expression
+
+    PUNTOCOMA       shift and go to state 32
+    COMA            shift and go to state 33
+
+
+state 25
+
+    (15) assignment -> INT ID . IGUAL expression PUNTOCOMA
+    (11) var_list -> ID .
+    (12) var_list -> ID . IGUAL expression
+
+    IGUAL           shift and go to state 34
+    PUNTOCOMA       reduce using rule 11 (var_list -> ID .)
+    COMA            reduce using rule 11 (var_list -> ID .)
+
+
+state 26
+
+    (3) function -> INT MAIN PAREI PARED BRACI statement_list BRACD .
+
+    $end            reduce using rule 3 (function -> INT MAIN PAREI PARED BRACI statement_list BRACD .)
+
+
+state 27
+
+    (4) statement_list -> statement statement_list .
+
+    BRACD           reduce using rule 4 (statement_list -> statement statement_list .)
+
+
+state 28
+
+    (16) assignment -> ID IGUAL . expression PUNTOCOMA
+    (17) expression -> . term
+    (18) expression -> . expression OPMAT term
+    (19) term -> . NUM
+    (20) term -> . ID
+
+    NUM             shift and go to state 38
+    ID              shift and go to state 35
+
+    expression                     shift and go to state 36
+    term                           shift and go to state 37
+
+state 29
+
+    (21) for_loop -> FOR PAREI . ID IGUAL NUM PUNTOCOMA ID OPLOG NUM PUNTOCOMA ID OPMAT PARED BRACI statement_list BRACD
+
+    ID              shift and go to state 39
+
+
+state 30
+
+    (23) return_statement -> RETURN NUM . PUNTOCOMA
+
+    PUNTOCOMA       shift and go to state 40
+
+
+state 31
+
+    (24) return_statement -> RETURN ID . PUNTOCOMA
+
+    PUNTOCOMA       shift and go to state 41
+
+
+state 32
+
+    (10) variable_declaration -> INT var_list PUNTOCOMA .
+
+    INT             reduce using rule 10 (variable_declaration -> INT var_list PUNTOCOMA .)
+    ID              reduce using rule 10 (variable_declaration -> INT var_list PUNTOCOMA .)
+    FOR             reduce using rule 10 (variable_declaration -> INT var_list PUNTOCOMA .)
+    RETURN          reduce using rule 10 (variable_declaration -> INT var_list PUNTOCOMA .)
+    BRACD           reduce using rule 10 (variable_declaration -> INT var_list PUNTOCOMA .)
+
+
+state 33
+
+    (13) var_list -> var_list COMA . ID
+    (14) var_list -> var_list COMA . ID IGUAL expression
+
+    ID              shift and go to state 42
+
+
+state 34
+
+    (15) assignment -> INT ID IGUAL . expression PUNTOCOMA
+    (12) var_list -> ID IGUAL . expression
+    (17) expression -> . term
+    (18) expression -> . expression OPMAT term
+    (19) term -> . NUM
+    (20) term -> . ID
+
+    NUM             shift and go to state 38
+    ID              shift and go to state 35
+
+    expression                     shift and go to state 43
+    term                           shift and go to state 37
+
+state 35
+
+    (20) term -> ID .
+
+    PUNTOCOMA       reduce using rule 20 (term -> ID .)
+    OPMAT           reduce using rule 20 (term -> ID .)
+    COMA            reduce using rule 20 (term -> ID .)
+
+
+state 36
+
+    (16) assignment -> ID IGUAL expression . PUNTOCOMA
+    (18) expression -> expression . OPMAT term
+
+    PUNTOCOMA       shift and go to state 44
+    OPMAT           shift and go to state 45
+
+
+state 37
+
+    (17) expression -> term .
+
+    PUNTOCOMA       reduce using rule 17 (expression -> term .)
+    OPMAT           reduce using rule 17 (expression -> term .)
+    COMA            reduce using rule 17 (expression -> term .)
+
+
+state 38
+
+    (19) term -> NUM .
+
+    PUNTOCOMA       reduce using rule 19 (term -> NUM .)
+    OPMAT           reduce using rule 19 (term -> NUM .)
+    COMA            reduce using rule 19 (term -> NUM .)
+
+
+state 39
+
+    (21) for_loop -> FOR PAREI ID . IGUAL NUM PUNTOCOMA ID OPLOG NUM PUNTOCOMA ID OPMAT PARED BRACI statement_list BRACD
+
+    IGUAL           shift and go to state 46
+
+
+state 40
+
+    (23) return_statement -> RETURN NUM PUNTOCOMA .
+
+    INT             reduce using rule 23 (return_statement -> RETURN NUM PUNTOCOMA .)
+    ID              reduce using rule 23 (return_statement -> RETURN NUM PUNTOCOMA .)
+    FOR             reduce using rule 23 (return_statement -> RETURN NUM PUNTOCOMA .)
+    RETURN          reduce using rule 23 (return_statement -> RETURN NUM PUNTOCOMA .)
+    BRACD           reduce using rule 23 (return_statement -> RETURN NUM PUNTOCOMA .)
+
+
+state 41
+
+    (24) return_statement -> RETURN ID PUNTOCOMA .
+
+    INT             reduce using rule 24 (return_statement -> RETURN ID PUNTOCOMA .)
+    ID              reduce using rule 24 (return_statement -> RETURN ID PUNTOCOMA .)
+    FOR             reduce using rule 24 (return_statement -> RETURN ID PUNTOCOMA .)
+    RETURN          reduce using rule 24 (return_statement -> RETURN ID PUNTOCOMA .)
+    BRACD           reduce using rule 24 (return_statement -> RETURN ID PUNTOCOMA .)
+
+
+state 42
+
+    (13) var_list -> var_list COMA ID .
+    (14) var_list -> var_list COMA ID . IGUAL expression
+
+    PUNTOCOMA       reduce using rule 13 (var_list -> var_list COMA ID .)
+    COMA            reduce using rule 13 (var_list -> var_list COMA ID .)
+    IGUAL           shift and go to state 47
+
+
+state 43
+
+    (15) assignment -> INT ID IGUAL expression . PUNTOCOMA
+    (12) var_list -> ID IGUAL expression .
+    (18) expression -> expression . OPMAT term
+
+  ! shift/reduce conflict for PUNTOCOMA resolved as shift
+    PUNTOCOMA       shift and go to state 48
+    COMA            reduce using rule 12 (var_list -> ID IGUAL expression .)
+    OPMAT           shift and go to state 45
+
+  ! PUNTOCOMA       [ reduce using rule 12 (var_list -> ID IGUAL expression .) ]
+
+
+state 44
+
+    (16) assignment -> ID IGUAL expression PUNTOCOMA .
+
+    INT             reduce using rule 16 (assignment -> ID IGUAL expression PUNTOCOMA .)
+    ID              reduce using rule 16 (assignment -> ID IGUAL expression PUNTOCOMA .)
+    FOR             reduce using rule 16 (assignment -> ID IGUAL expression PUNTOCOMA .)
+    RETURN          reduce using rule 16 (assignment -> ID IGUAL expression PUNTOCOMA .)
+    BRACD           reduce using rule 16 (assignment -> ID IGUAL expression PUNTOCOMA .)
+
+
+state 45
+
+    (18) expression -> expression OPMAT . term
+    (19) term -> . NUM
+    (20) term -> . ID
+
+    NUM             shift and go to state 38
+    ID              shift and go to state 35
+
+    term                           shift and go to state 49
+
+state 46
+
+    (21) for_loop -> FOR PAREI ID IGUAL . NUM PUNTOCOMA ID OPLOG NUM PUNTOCOMA ID OPMAT PARED BRACI statement_list BRACD
+
+    NUM             shift and go to state 50
+
+
+state 47
+
+    (14) var_list -> var_list COMA ID IGUAL . expression
+    (17) expression -> . term
+    (18) expression -> . expression OPMAT term
+    (19) term -> . NUM
+    (20) term -> . ID
+
+    NUM             shift and go to state 38
+    ID              shift and go to state 35
+
+    expression                     shift and go to state 51
+    term                           shift and go to state 37
+
+state 48
+
+    (15) assignment -> INT ID IGUAL expression PUNTOCOMA .
+
+    INT             reduce using rule 15 (assignment -> INT ID IGUAL expression PUNTOCOMA .)
+    ID              reduce using rule 15 (assignment -> INT ID IGUAL expression PUNTOCOMA .)
+    FOR             reduce using rule 15 (assignment -> INT ID IGUAL expression PUNTOCOMA .)
+    RETURN          reduce using rule 15 (assignment -> INT ID IGUAL expression PUNTOCOMA .)
+    BRACD           reduce using rule 15 (assignment -> INT ID IGUAL expression PUNTOCOMA .)
+
+
+state 49
+
+    (18) expression -> expression OPMAT term .
+
+    PUNTOCOMA       reduce using rule 18 (expression -> expression OPMAT term .)
+    OPMAT           reduce using rule 18 (expression -> expression OPMAT term .)
+    COMA            reduce using rule 18 (expression -> expression OPMAT term .)
+
+
+state 50
+
+    (21) for_loop -> FOR PAREI ID IGUAL NUM . PUNTOCOMA ID OPLOG NUM PUNTOCOMA ID OPMAT PARED BRACI statement_list BRACD
+
+    PUNTOCOMA       shift and go to state 52
+
+
+state 51
+
+    (14) var_list -> var_list COMA ID IGUAL expression .
+    (18) expression -> expression . OPMAT term
+
+    PUNTOCOMA       reduce using rule 14 (var_list -> var_list COMA ID IGUAL expression .)
+    COMA            reduce using rule 14 (var_list -> var_list COMA ID IGUAL expression .)
+    OPMAT           shift and go to state 45
+
+
+state 52
+
+    (21) for_loop -> FOR PAREI ID IGUAL NUM PUNTOCOMA . ID OPLOG NUM PUNTOCOMA ID OPMAT PARED BRACI statement_list BRACD
+
+    ID              shift and go to state 53
+
+
+state 53
+
+    (21) for_loop -> FOR PAREI ID IGUAL NUM PUNTOCOMA ID . OPLOG NUM PUNTOCOMA ID OPMAT PARED BRACI statement_list BRACD
+
+    OPLOG           shift and go to state 54
+
+
+state 54
+
+    (21) for_loop -> FOR PAREI ID IGUAL NUM PUNTOCOMA ID OPLOG . NUM PUNTOCOMA ID OPMAT PARED BRACI statement_list BRACD
+
+    NUM             shift and go to state 55
+
+
+state 55
+
+    (21) for_loop -> FOR PAREI ID IGUAL NUM PUNTOCOMA ID OPLOG NUM . PUNTOCOMA ID OPMAT PARED BRACI statement_list BRACD
+
+    PUNTOCOMA       shift and go to state 56
+
+
+state 56
+
+    (21) for_loop -> FOR PAREI ID IGUAL NUM PUNTOCOMA ID OPLOG NUM PUNTOCOMA . ID OPMAT PARED BRACI statement_list BRACD
+
+    ID              shift and go to state 57
+
+
+state 57
+
+    (21) for_loop -> FOR PAREI ID IGUAL NUM PUNTOCOMA ID OPLOG NUM PUNTOCOMA ID . OPMAT PARED BRACI statement_list BRACD
+
+    OPMAT           shift and go to state 58
+
+
+state 58
+
+    (21) for_loop -> FOR PAREI ID IGUAL NUM PUNTOCOMA ID OPLOG NUM PUNTOCOMA ID OPMAT . PARED BRACI statement_list BRACD
+
+    PARED           shift and go to state 59
+
+
+state 59
+
+    (21) for_loop -> FOR PAREI ID IGUAL NUM PUNTOCOMA ID OPLOG NUM PUNTOCOMA ID OPMAT PARED . BRACI statement_list BRACD
+
+    BRACI           shift and go to state 60
+
+
+state 60
+
+    (21) for_loop -> FOR PAREI ID IGUAL NUM PUNTOCOMA ID OPLOG NUM PUNTOCOMA ID OPMAT PARED BRACI . statement_list BRACD
+    (4) statement_list -> . statement statement_list
+    (5) statement_list -> . statement
+    (6) statement -> . variable_declaration
+    (7) statement -> . assignment
+    (8) statement -> . for_loop
+    (9) statement -> . return_statement
+    (10) variable_declaration -> . INT var_list PUNTOCOMA
+    (15) assignment -> . INT ID IGUAL expression PUNTOCOMA
+    (16) assignment -> . ID IGUAL expression PUNTOCOMA
+    (21) for_loop -> . FOR PAREI ID IGUAL NUM PUNTOCOMA ID OPLOG NUM PUNTOCOMA ID OPMAT PARED BRACI statement_list BRACD
+    (23) return_statement -> . RETURN NUM PUNTOCOMA
+    (24) return_statement -> . RETURN ID PUNTOCOMA
+
+    INT             shift and go to state 14
+    ID              shift and go to state 21
+    FOR             shift and go to state 22
+    RETURN          shift and go to state 23
+
+    statement_list                 shift and go to state 61
+    statement                      shift and go to state 16
+    variable_declaration           shift and go to state 17
+    assignment                     shift and go to state 18
+    for_loop                       shift and go to state 19
+    return_statement               shift and go to state 20
+
+state 61
+
+    (21) for_loop -> FOR PAREI ID IGUAL NUM PUNTOCOMA ID OPLOG NUM PUNTOCOMA ID OPMAT PARED BRACI statement_list . BRACD
+
+    BRACD           shift and go to state 62
+
+
+state 62
+
+    (21) for_loop -> FOR PAREI ID IGUAL NUM PUNTOCOMA ID OPLOG NUM PUNTOCOMA ID OPMAT PARED BRACI statement_list BRACD .
+
+    INT             reduce using rule 21 (for_loop -> FOR PAREI ID IGUAL NUM PUNTOCOMA ID OPLOG NUM PUNTOCOMA ID OPMAT PARED BRACI statement_list BRACD .)
+    ID              reduce using rule 21 (for_loop -> FOR PAREI ID IGUAL NUM PUNTOCOMA ID OPLOG NUM PUNTOCOMA ID OPMAT PARED BRACI statement_list BRACD .)
+    FOR             reduce using rule 21 (for_loop -> FOR PAREI ID IGUAL NUM PUNTOCOMA ID OPLOG NUM PUNTOCOMA ID OPMAT PARED BRACI statement_list BRACD .)
+    RETURN          reduce using rule 21 (for_loop -> FOR PAREI ID IGUAL NUM PUNTOCOMA ID OPLOG NUM PUNTOCOMA ID OPMAT PARED BRACI statement_list BRACD .)
+    BRACD           reduce using rule 21 (for_loop -> FOR PAREI ID IGUAL NUM PUNTOCOMA ID OPLOG NUM PUNTOCOMA ID OPMAT PARED BRACI statement_list BRACD .)
+
+WARNING: 
+WARNING: Conflicts:
+WARNING: 
+WARNING: shift/reduce conflict for PUNTOCOMA in state 43 resolved as shift

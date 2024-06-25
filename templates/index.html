@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Analizador léxico semántico</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+            background-color: #f0f0f0;
+        }
+
+        h1,
+        h3,
+        h4 {
+            text-align: center;
+            color: #333;
+        }
+
+        form {
+            margin-bottom: 20px;
+        }
+
+        textarea {
+            width: 100%;
+            padding: 10px;
+            font-size: 14px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            box-sizing: border-box;
+        }
+
+        button {
+            background-color: #4CAF50;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background-color: #45a049;
+        }
+
+        table {
+            width: 80%;
+            border-collapse: collapse;
+            margin: 20px auto;
+        }
+
+        th,
+        td {
+            padding: 8px;
+            text-align: center;
+        }
+
+        th {
+            background-color: #4CAF50;
+            color: white;
+        }
+
+        td {
+            background-color: #f2f2f2;
+        }
+
+        ul {
+            list-style-type: none;
+            padding: 0;
+        }
+
+        li {
+            padding: 8px;
+            margin-bottom: 5px;
+            background-color: #f44336;
+            color: black;
+            border-radius: 5px;
+        }
+
+        .scrollable-table {
+            max-height: 400px;
+            /* Altura máxima del div */
+            overflow-y: auto;
+            /* Desbordamiento vertical */
+        }
+
+        th {
+            background-color: #f2f2f2;
+        }
+
+        .container {
+            background-color: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .error {
+            color: red;
+        }
+
+        .token {
+            color: green;
+        }
+
+        .syntax {
+            color: blue;
+        }
+
+        th {
+            color: black;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <h1>Código</h1>
+        <form id="codeForm">
+            <textarea id="codeInput" name="code" rows="10" cols="50">
+                #include <stydio.h>
+                    int main(){
+                        int a, val , suma = 0;
+                        for (a = 0; a <= 10 ; a++){
+                            val = a * 10 ;
+                            suma = suma + val;
+                        }
+                        return 0;
+                    }
+            </textarea><br>
+            <button type="submit">Analizar</button>
+        </form>
+        <h2>Errores</h2>
+        <table id="errorsTable">
+            <thead>
+                <tr>
+                    <th>Error</th>
+                </tr>
+            </thead>
+            <tbody id="errors"></tbody>
+        </table>
+        <h2>Sintaxis</h2>
+        <table id="resultTable">
+            <thead>
+                <tr>
+                    <th>Sintaxis</th>
+                </tr>
+            </thead>
+            <tbody id="syntaxs"></tbody> <!-- Aquí está el cambio -->
+        </table>
+        <h2>Tokens</h2>
+        <table id="tokensTable" class="table table-bordered">
+            <thead>
+                <tr>
+                    <th>Token</th>
+                </tr>
+            </thead>
+            <tbody id="tokens">
+                {% if tokens %}
+                {% for token, token_type in tokens %}
+                <tr>
+                    <td>{{ token }}</td>
+                    {% if token_type in reserved.values() %}
+                    <td class="highlight">X</td>
+                    {% else %}
+                    <td></td>
+                    {% endif %}
+                    {% if token_type == 'SYMBOL' %}
+                    <td class="highlight">X</td>
+                    {% else %}
+                    <td></td>
+                    {% endif %}
+                    {% if token_type in ['PLUS', 'MINUS', 'EQUALS', 'TIMES', 'DIVIDE'] %}
+                    <td class="highlight">X</td>
+                    {% else %}
+                    <td></td>
+                    {% endif %}
+                    {% if token_type == 'ID' %}
+                    <td class="highlight">X</td>
+                    {% else %}
+                    <td></td>
+                    {% endif %}
+                </tr>
+                {% endfor %}
+                {% endif %}
+            </tbody>
+        </table>
+        
+    </div>
+
+    <script>
+        document.getElementById('codeForm').addEventListener('submit', function (event) {
+            event.preventDefault();
+            const formData = new FormData(this);
+            fetch('/analyze', {
+                method: 'POST',
+                body: formData
+            })
+                .then(response => response.json())
+                .then(data => {
+                    const tokensTable = document.getElementById('tokens');
+                    const errorsTable = document.getElementById('errors');
+                    const resultTable = document.getElementById('syntaxs'); // Aquí está el cambio
+
+                    tokensTable.innerHTML = '';
+                    errorsTable.innerHTML = '';
+                    resultTable.innerHTML = ''; // Aquí está el cambio
+
+                    data.tokens.forEach(token => {
+                        tokensTable.innerHTML += `<tr><td class="token">${token}</td></tr>`;
+                    });
+
+                    data.errors.forEach(error => {
+                        errorsTable.innerHTML += `<tr><td class="error">${error}</td></tr>`;
+                    });
+
+                    data.syntaxs.forEach(syntax => { // Aquí está el cambio
+                        resultTable.innerHTML += `<tr><td class="syntax">${syntax}</td></tr>`; // Aquí está el cambio
+                    });
+                })
+                .catch(error => console.error('Error:', error));
+        });
+    </script>
+</body>
+
+</html>
